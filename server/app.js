@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import {connectDB}  from "./db/connect.js";
 import {startAdmin} from "./admin/index.js";
 import {router} from "./routes/news.js"
-import {Blog} from "./models/Blog.js"
 const app = express();
 dotenv.config();
 

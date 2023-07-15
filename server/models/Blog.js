@@ -19,9 +19,9 @@ export const BlogSchema = new mongoose.Schema({
         type: String
     },
 
-    created_date : {
-        type: Date
-    }
-})
+},{
+    timestamps : true
+}
+)
 
 export const Blog =  mongoose.model('Blog' , BlogSchema);
