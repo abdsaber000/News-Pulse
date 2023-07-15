@@ -11,16 +11,17 @@ export const BlogSchema = new mongoose.Schema({
         type: String,
     } ,
 
-    short_description : {
-        type : String,
-        maxLength : [30 , `The short description can't be more than 30 characters`]
-    },
-
     image_url : {
         type : String
     },
    
+    content : {
+        type: String
+    },
 
+    created_date : {
+        type: Date
+    }
 })
 
 export const Blog =  mongoose.model('Blog' , BlogSchema);
