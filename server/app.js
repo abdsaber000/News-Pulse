@@ -9,7 +9,7 @@ dotenv.config();
 
 // middleware
 app.use(express.json());
-app.use('api/v1/news' , router)
+app.use('/api/v1/news' , router)
 
 const port = process.env.PORT || 3000;
 

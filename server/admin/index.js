@@ -2,7 +2,6 @@ import AdminJS from "adminjs";
 import AdminJSExpress from "@adminjs/express";
 import { Database, Resource } from "@adminjs/mongoose";
 import { Blog } from "../models/Blog.js";
-
 AdminJS.registerAdapter({
     Database, Resource
 });
