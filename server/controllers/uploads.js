@@ -32,6 +32,7 @@ const uploadMethod = async (req, res) => {
         .json({ image: { src: `/uploads/${productImage.name}` } });
     }catch(error){
         console.log(error);
+        res.status(403).send("can't upload the image");
     }
 }
 
