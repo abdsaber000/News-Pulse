@@ -36,4 +36,20 @@ const uploadMethod = async (req, res) => {
 }
 
 
-export { uploadMethod};
+const getImage = (req, res) =>{
+    try{
+        const imageName = req.params.image;
+        const imagePath = path.join(__dirname ,'../public/uploads/' + imageName);
+        const readStream = fs.createReadStream(imagePath);
+        console.log(imagePath);
+        res.writeHead(200, {
+            'Content-Type': 'image'
+        });
+        readStream.pipe(res);
+    }catch(error){
+        res.send("image not found");
+    }
+
+}
+
+export { uploadMethod , getImage};
