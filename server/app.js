@@ -11,9 +11,9 @@ dotenv.config();
 
 // middleware
 app.use(cors());
-app.use(express.static('./public'));
+app.use('/uploads',express.static('./public'));
 app.use(express.json());
-app.use(fileUpload({ useTempFiles: true }));
+app.use(fileUpload());
 // routers
 
 app.use('/api/v1/news' , router)

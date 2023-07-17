@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const uploadMethod = async (req, res) => {
-    console.log('uploaded !!!!');
+    try{
     if (!req.files) {
         throw new BadRequestError('No File Uploaded');
     }
@@ -30,6 +30,9 @@ const uploadMethod = async (req, res) => {
     return res
         .status(StatusCodes.OK)
         .json({ image: { src: `/uploads/${productImage.name}` } });
+    }catch(error){
+        console.log(error);
+    }
 }
 
 
