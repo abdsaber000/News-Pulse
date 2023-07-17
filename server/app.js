@@ -3,11 +3,16 @@ import dotenv from "dotenv";
 import {connectDB}  from "./db/connect.js";
 import {startAdmin} from "./admin/index.js";
 import {router} from "./routes/news.js"
+import cors from "cors";
 const app = express();
 dotenv.config();
 
 // middleware
 app.use(express.json());
+app.use(cors());
+
+// routers
+
 app.use('/api/v1/news' , router)
 
 const port = process.env.PORT || 3000;
