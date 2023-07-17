@@ -1,4 +1,4 @@
-const url = '/api/v1/products'
+const url = ''
 const fileFormDOM = document.querySelector('.file-form')
 
 const nameInputDOM = document.querySelector('#name')
@@ -29,6 +29,7 @@ imageInputDOM.addEventListener('change',async (e)=>{
     'Content-Type':'multipart/form-data'
    }
   })
+  console.log(data);
   imageValue = src
  } catch (error) {
    imageValue = null
@@ -36,7 +37,7 @@ imageInputDOM.addEventListener('change',async (e)=>{
  }
 })
 
-
+/*
 fileFormDOM.addEventListener('submit',async (e)=>{
 e.preventDefault()
 const nameValue = nameInputDOM.value;
@@ -46,13 +47,13 @@ try {
  const product = {name:nameValue,price:priceValue,image:imageValue}
  
   await axios.post(url,product);
-  fetchProducts()
+  // fetchProducts()
 } catch (error) {
  console.log(error);
 }
 })
 
-
+*/
 
 async function fetchProducts () {
  try {
@@ -74,4 +75,4 @@ return `<article class="product">
  
 }
 
-fetchProducts()
+// fetchProducts()

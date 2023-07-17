@@ -5,13 +5,15 @@ import {startAdmin} from "./admin/index.js";
 import {router} from "./routes/news.js"
 import { uploadRouter } from "./routes/uploads.js";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 const app = express();
 dotenv.config();
 
 // middleware
-app.use(express.json());
 app.use(cors());
-
+app.use(express.static('./public'));
+app.use(express.json());
+app.use(fileUpload({ useTempFiles: true }));
 // routers
 
 app.use('/api/v1/news' , router)
