@@ -42,13 +42,18 @@ const getImage = (req, res) =>{
         const imageName = req.params.image;
         const imagePath = path.join(__dirname ,'../public/uploads/' + imageName);
         const readStream = fs.createReadStream(imagePath);
-        console.log(imagePath);
+        readStream.on('error' , function(err) {
+            return res.send("image not found");
+        })
+        /*
         res.writeHead(200, {
             'Content-Type': 'image'
-        });
+        });*/
         readStream.pipe(res);
+
+        console.log(imagePath);
     }catch(error){
-        res.send("image not found");
+        res.status(403).send("image not found");
     }
 
 }
