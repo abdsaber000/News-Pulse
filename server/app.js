@@ -4,6 +4,7 @@ import {connectDB}  from "./db/connect.js";
 import {startAdmin} from "./admin/index.js";
 import {router} from "./routes/news.js"
 import { uploadRouter } from "./routes/uploads.js";
+import {report} from "./routes/contact.js";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 const app = express();
@@ -17,8 +18,8 @@ app.use(fileUpload());
 // routers
 
 app.use('/api/v1/news' , router)
+app.use('/api/v1/contact' , report);
 app.use('/uploads' , uploadRouter);
-
 const port = process.env.PORT || 3000;
 
 const start = async () => {
