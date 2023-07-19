@@ -3,7 +3,7 @@ import AdminJSExpress from "@adminjs/express";
 import { Database, Resource } from "@adminjs/mongoose";
 import { Blog } from "../models/Blog.js";
 import {User} from "../models/User.js";
-
+import {NewReport} from "../models/contact.js";
 AdminJS.registerAdapter({
     Database, Resource
 });
@@ -24,7 +24,7 @@ const authenticate = async (email, password) => {
 
 export const startAdmin = (app) => {
     const admin = new AdminJS({
-        resources: [Blog, User]
+        resources: [Blog, User , NewReport]
     });
     const adminRouter = AdminJSExpress.buildAuthenticatedRouter(
         admin,

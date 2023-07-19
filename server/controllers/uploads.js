@@ -32,7 +32,7 @@ const uploadMethod = async (req, res) => {
         .json({ image: { src: `/uploads/${productImage.name}` } });
     }catch(error){
         console.log(error);
-        res.status(403).send("can't upload the image");
+        res.status(403).send({"msg" : error.message});
     }
 }
 
@@ -41,19 +41,22 @@ const getImage = (req, res) =>{
     try{
         const imageName = req.params.image;
         const imagePath = path.join(__dirname ,'../public/uploads/' + imageName);
+        if(!fs.existsSync(imagePath)){
+            throw new BadRequestError("image not found");
+        }
         const readStream = fs.createReadStream(imagePath);
         readStream.on('error' , function(err) {
-            return res.send("image not found");
+            return res.status(403).send("image not found");
         })
-        /*
+        
         res.writeHead(200, {
             'Content-Type': 'image'
-        });*/
+        });
         readStream.pipe(res);
 
         console.log(imagePath);
     }catch(error){
-        res.status(403).send("image not found");
+        res.status(403).send({"msg" : error.message});
     }
 
 }
