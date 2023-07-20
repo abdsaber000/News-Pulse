@@ -46,7 +46,7 @@ const getImage = (req, res) =>{
         }
         const readStream = fs.createReadStream(imagePath);
         readStream.on('error' , function(err) {
-            return res.status(403).send("image not found");
+            throw new BadRequestError("image not found");
         })
         
         res.writeHead(200, {
