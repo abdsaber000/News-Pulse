@@ -9,7 +9,7 @@ export const UserSchema = new mongoose.Schema({
 
     password : {
         type : String,
-        required : [true, 'You must proivde a user name'],
+        required : [true, 'You must proivde a password'],
         minlength : 8
     },
 
