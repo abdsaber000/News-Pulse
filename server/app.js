@@ -7,6 +7,7 @@ import { uploadRouter } from "./routes/uploads.js";
 import {report} from "./routes/contact.js";
 import cors from "cors";
 import fileUpload from "express-fileupload";
+import {errorHandlerMiddleware} from "./middleware/error-handler.js"
 const app = express();
 dotenv.config();
 
@@ -21,8 +22,8 @@ app.use('/api/v1/news' , router)
 app.use('/api/v1/contact' , report);
 app.use('/uploads' , uploadRouter);
 
-app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
+
 
 
 const port = process.env.PORT || 3000;
@@ -39,6 +40,3 @@ const start = async () => {
 };
 
 start();
-
-
-
