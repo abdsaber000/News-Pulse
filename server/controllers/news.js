@@ -1,16 +1,37 @@
 import express from "express";
 import statusCodes from "http-status-codes";
 import {Blog} from "../models/Blog.js"; 
+import jwt from "jsonwebtoken";
 
-export const getAllBlogs = async (req , res)=>{
-    try{
-        const blogs = await Blog.find({});
-        res.status(statusCodes.ACCEPTED).json(blogs);
-    }catch(error){
-        res.status(statusCodes.BAD_REQUEST).json({msg:error});
+export const getAllBlogs = async (req, res) => {
+  const blogs = await Blog.find({});
+  res.status(statusCodes.ACCEPTED).json(blogs);
+};
+
+export const getPublisherNews = async (req, res) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader.split(" ")[1];
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const person = decoded.name;
+  const blogs = await Blog.find({ publisher: person });
+  res.status(statusCodes.ACCEPTED).json(blogs);
+};
+
+export const handleBlogsRequest = async (req, res, requestHandler) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return getAllBlogs(req, res);
     }
-}
+    return requestHandler(req, res);
+  } catch (error) {
+    res.status(statusCodes.BAD_REQUEST).json({ msg: error });
+  }
+};
 
+export const IsPublisher = async (req, res) => {
+  handleBlogsRequest(req, res, getPublisherNews);
+};
 
 export const getBlog = async (req , res)=>{
     try{
