@@ -1,4 +1,4 @@
-import UnauthenticatedError from '../errors/unauthenticated';
+import UnauthenticatedError from '../errors/unauthenticated.js';
 import jsonwebtoken from 'jsonwebtoken';
 
 const auth = async (req, res, next) => {
