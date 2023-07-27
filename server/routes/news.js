@@ -5,6 +5,7 @@ const router = express.Router()
 
 router.route('/').get(IsPublisher);
 router.post('/' , auth , createBlog);
-router.route('/:id').get(getBlog).patch(updateBlog).delete(deleteBlog);
-
+router.patch('/:id' , auth , updateBlog);
+router.delete('/:id' , auth , deleteBlog)
+router.get('/:id' , getBlog);
 export {router}

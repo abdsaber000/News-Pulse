@@ -63,11 +63,22 @@ export const createBlog = async (req , res)=>{
 export const updateBlog = async (req , res)=>{
     try{
         const BlogId = req.params.id;
-        const blog = await Blog.findOneAndUpdate({_id:BlogId} , req.body)
+        const blog = await Blog.findOne({_id:BlogId})
         if(!blog){
             return res.status(statusCodes.NOT_FOUND).json(`No Blog found with id ${BlogId}`);
         }
-        res.status(statusCodes.ACCEPTED).json({blog});
+        if(req.user.name === blog.publisher){
+            if(req.user.name === req.body.publisher){
+                const updated_blog = await Blog.findOneAndUpdate(req.body)
+                res.status(statusCodes.ACCEPTED).json({updated_blog});
+            }
+            else{
+                res.status(statusCodes.BAD_REQUEST).json({msg:"Publisher name must be same as user_name"})
+            }
+        }
+        else{
+            res.status(statusCodes.BAD_REQUEST).json({msg:"You can't update a blog that doesn't belong to you"})
+        }
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
