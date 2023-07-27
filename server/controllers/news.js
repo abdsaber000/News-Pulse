@@ -48,8 +48,13 @@ export const getBlog = async (req , res)=>{
 
 export const createBlog = async (req , res)=>{
     try{
-        const blog = await Blog.create(req.body)
-        res.status(statusCodes.ACCEPTED).json({blog});
+        if(req.user.name === req.body.publisher){
+            const blog = await Blog.create(req.body)
+            res.status(statusCodes.ACCEPTED).json({blog});
+        }
+        else{
+            res.status(statusCodes.BAD_REQUEST).json({msg:"Publisher name must be same as user_name"})
+        }
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
