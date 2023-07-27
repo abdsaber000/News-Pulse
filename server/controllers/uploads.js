@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import BadRequestError from "../errors/bad-request.js";
 import { fileURLToPath } from 'url';
 import fs from "fs";
-
+const url = 'https://studentsystem.onrender.com/uploads/'
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -29,7 +29,7 @@ const uploadMethod = async (req, res) => {
     await productImage.mv(imagePath);
     return res
         .status(StatusCodes.OK)
-        .json({ image: { src: `/uploads/${productImage.name}` } });
+        .json({ image: { src: `${url}${productImage.name}` } });
     }catch(error){
         console.log(error);
         res.status(403).send({message : error.message});
