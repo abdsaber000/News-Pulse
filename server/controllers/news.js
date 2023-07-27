@@ -87,11 +87,17 @@ export const updateBlog = async (req , res)=>{
 export const deleteBlog = async (req , res)=>{
     try{
         const BlogId = req.params.id;
-        const blog = await Blog.findOneAndDelete({_id:BlogId})
+        const blog = await Blog.findOne({_id:BlogId})
         if(!blog){
             return res.status(statusCodes.NOT_FOUND).json(`No Blog found with id ${BlogId}`);
         }
-        res.status(statusCodes.ACCEPTED).json('Blog has been deleted successfully');
+        if(req.user.name === blog.publisher){
+            const deleted_Blog = await Blog.findOneAndDelete({_id:BlogId})
+            res.status(statusCodes.ACCEPTED).json('Blog has been deleted successfully');
+        }
+        else{
+            res.status(statusCodes.BAD_REQUEST).json({msg:"You can't delete a blog that doesn't belong to you"})
+        }
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
