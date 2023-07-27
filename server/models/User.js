@@ -34,9 +34,9 @@ UserSchema.pre('save', async function () {
 UserSchema.methods.createJWT = function () {
     return jsonwebtoken.sign(
         { userId: this._id, name: this.user_name },
-        process.env.JWT_SECRET,
+        'secret',
         {
-            expiresIn: process.env.JWT_LIFETIME,
+            expiresIn: '1d',
         }
     )
 }
