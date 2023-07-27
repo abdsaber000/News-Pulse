@@ -32,7 +32,7 @@ const uploadMethod = async (req, res) => {
         .json({ image: { src: `/uploads/${productImage.name}` } });
     }catch(error){
         console.log(error);
-        res.status(403).send({"msg" : error.message});
+        res.status(403).send({message : error.message});
     }
 }
 
@@ -56,7 +56,7 @@ const getImage = (req, res) =>{
 
         console.log(imagePath);
     }catch(error){
-        res.status(403).send({"msg" : error.message});
+        res.status(403).send({message : error.message});
     }
 
 }

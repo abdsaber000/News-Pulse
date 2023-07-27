@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import {User} from "../models/User.js";
 import BadRequestError from "../errors/bad-request.js";
 import UnauthenticatedError from "../errors/unauthenticated.js";
-
+import { errorHandler } from "../errors/error-handler.js";
 export const register = async (req, res) =>{
     try{
         const user = await User.create({...req.body});
@@ -12,7 +12,7 @@ export const register = async (req, res) =>{
             token
         })
     }catch(error){
-        res.status(StatusCodes.BAD_REQUEST).send({error});
+        return errorHandler(error , res);
     }
 }
 
@@ -39,7 +39,7 @@ export const login = async (req, res) =>{
             token
         })
     }catch(error){
-        res.status(StatusCodes.BAD_REQUEST).send({error});
+        return errorHandler(error , res);
     }
 }
 
