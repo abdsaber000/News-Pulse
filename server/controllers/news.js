@@ -3,9 +3,16 @@ import statusCodes from "http-status-codes";
 import {Blog} from "../models/Blog.js"; 
 import jwt from "jsonwebtoken";
 
+export const shortenBlogs = (blog) => {
+  blog.content = blog.content.split(" ").splice(0,3).join(" ");
+};
+
+
 export const getAllBlogs = async (req, res) => {
   const blogs = await Blog.find({});
-  res.status(statusCodes.ACCEPTED).json(blogs);
+  blogs.forEach(shortenBlogs);
+  res.status(statusCodes.ACCEPTED).json({ blogs });
+
 };
 
 export const getPublisherNews = async (req, res) => {
@@ -14,16 +21,18 @@ export const getPublisherNews = async (req, res) => {
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const person = decoded.name;
   const blogs = await Blog.find({ publisher: person });
-  res.status(statusCodes.ACCEPTED).json(blogs);
+  blogs.forEach(shortenBlogs);
+        res.status(statusCodes.ACCEPTED).json({ blogs });
+
 };
 
-export const handleBlogsRequest = async (req, res, requestHandler) => {
+export const handleBlogsRequest = async (req, res, getPublisherNews) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return getAllBlogs(req, res);
     }
-    return requestHandler(req, res);
+    return getPublisherNews(req, res);
   } catch (error) {
     res.status(statusCodes.BAD_REQUEST).json({ msg: error });
   }
