@@ -9,21 +9,27 @@ export const shortenBlogs = (blog) => {
 
 
 export const getAllBlogs = async (req, res) => {
-  const blogs = await Blog.find({});
-  blogs.forEach(shortenBlogs);
-  res.status(statusCodes.ACCEPTED).json({ blogs });
-
+  try {
+    const blogs = await Blog.find({});
+    blogs.forEach(shortenBlogs);
+    res.status(statusCodes.ACCEPTED).json({ blogs });
+  } catch (error) {
+    res.status(statusCodes.BAD_REQUEST).json({ msg: error });
+  }
 };
 
 export const getPublisherNews = async (req, res) => {
-  const authHeader = req.headers.authorization;
-  const token = authHeader.split(" ")[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  const person = decoded.name;
-  const blogs = await Blog.find({ publisher: person });
-  blogs.forEach(shortenBlogs);
-        res.status(statusCodes.ACCEPTED).json({ blogs });
-
+  try {
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const person = decoded.name;
+    const blogs = await Blog.find({ publisher: person });
+    blogs.forEach(shortenBlogs);
+    res.status(statusCodes.ACCEPTED).json({ blogs });
+  } catch (error) {
+    res.status(statusCodes.UNAUTHORIZED).json({ msg: error });
+  }
 };
 
 export const handleBlogsRequest = async (req, res, getPublisherNews) => {
