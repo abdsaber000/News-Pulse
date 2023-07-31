@@ -63,8 +63,8 @@ export const getBlog = async (req , res)=>{
 
 export const createBlog = async (req , res)=>{
     try{
+        req.body.publisher = req.user.name
         const blog = await Blog.create(req.body)
-        blog.publisher = req.user.name;
         res.status(statusCodes.ACCEPTED).json({blog});
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
