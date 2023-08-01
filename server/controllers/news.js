@@ -79,13 +79,9 @@ export const updateBlog = async (req , res)=>{
             return res.status(statusCodes.NOT_FOUND).json(`No Blog found with id ${BlogId}`);
         }
         if(req.user.name === blog.publisher){
-            if(req.user.name === req.body.publisher){
-                const updated_blog = await Blog.findOneAndUpdate(req.body)
-                res.status(statusCodes.ACCEPTED).json({updated_blog});
-            }
-            else{
-                res.status(statusCodes.BAD_REQUEST).json({msg:"Publisher name must be same as user_name"})
-            }
+              req.body.publisher = req.user.name;
+              const updated_blog = await Blog.findOneAndUpdate(req.body)
+              res.status(statusCodes.ACCEPTED).json({updated_blog});
         }
         else{
             res.status(statusCodes.BAD_REQUEST).json({msg:"You can't update a blog that doesn't belong to you"})
