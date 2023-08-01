@@ -9,6 +9,8 @@ export const BlogSchema = new mongoose.Schema({
 
     publisher : {
         type: String,
+        required : [true , 'Blog must have a publisher']
+
     } ,
 
     image_url : {
