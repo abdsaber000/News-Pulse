@@ -10,9 +10,9 @@ export const shortenBlogs = (blog) => {
 
 export const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find({});
-    blogs.forEach(shortenBlogs);
-    res.status(statusCodes.ACCEPTED).json({ blogs });
+    const data = await Blog.find({});
+    data.forEach(shortenBlogs);
+    res.status(statusCodes.ACCEPTED).json({ dat });
   } catch (error) {
     res.status(statusCodes.BAD_REQUEST).json({ msg: error });
   }
@@ -24,9 +24,9 @@ export const getPublisherNews = async (req, res) => {
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const person = decoded.name;
-    const blogs = await Blog.find({ publisher: person });
-    blogs.forEach(shortenBlogs);
-    res.status(statusCodes.ACCEPTED).json({ blogs });
+    const data = await Blog.find({ publisher: person });
+    data.forEach(shortenBlogs);
+    res.status(statusCodes.ACCEPTED).json({ data });
   } catch (error) {
     res.status(statusCodes.UNAUTHORIZED).json({ msg: error });
   }
