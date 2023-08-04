@@ -29,7 +29,7 @@ const uploadMethod = async (req, res) => {
     await productImage.mv(imagePath);
     return res
         .status(StatusCodes.OK)
-        .json({ image: { src: `${url}${productImage.name}` } });
+        .json({ data : { src: `${url}${productImage.name}` } });
     }catch(error){
         console.log(error);
         res.status(403).send({message : error.message});
