@@ -7,8 +7,12 @@ export const register = async (req, res) =>{
     try{
         const user = await User.create({...req.body});
         const token = user.createJWT();
-        res.status(StatusCodes.CREATED).json({
-            user_name : user.user_name,
+        res.status(StatusCodes.OK).json({
+            data : {
+                user_name : user.user_name,
+                email : user.email,
+                id : user._id
+            },
             token
         })
     }catch(error){
@@ -35,7 +39,11 @@ export const login = async (req, res) =>{
 
         const token = user.createJWT()
         res.status(StatusCodes.OK).json({
-            user_name : user.user_name,
+            data : {
+                user_name : user.user_name,
+                email : user.email,
+                id : user._id
+            },
             token
         })
     }catch(error){
