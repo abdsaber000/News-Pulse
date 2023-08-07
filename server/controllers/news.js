@@ -51,11 +51,11 @@ export const IsPublisher = async (req, res) => {
 export const getBlog = async (req , res)=>{
     try{
         const BlogId = req.params.id;
-        const blog = await Blog.findOne({_id:BlogId})
-        if(!blog){
+        const data = await Blog.findOne({_id:BlogId})
+        if(!data){
             return res.status(statusCodes.NOT_FOUND).json(`No Blog found with id ${BlogId}`);
         }
-        res.status(statusCodes.ACCEPTED).json({blog});
+        res.status(statusCodes.ACCEPTED).json({data});
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
@@ -64,8 +64,8 @@ export const getBlog = async (req , res)=>{
 export const createBlog = async (req , res)=>{
     try{
         req.body.publisher = req.user.name
-        const blog = await Blog.create(req.body)
-        res.status(statusCodes.ACCEPTED).json({blog});
+        const data = await Blog.create(req.body)
+        res.status(statusCodes.ACCEPTED).json({data});
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
@@ -80,8 +80,8 @@ export const updateBlog = async (req , res)=>{
         }
         if(req.user.name === blog.publisher){
               req.body.publisher = req.user.name;
-              const updated_blog = await Blog.findOneAndUpdate(req.body)
-              res.status(statusCodes.ACCEPTED).json({updated_blog});
+              const data = await Blog.findOneAndUpdate(req.body)
+              res.status(statusCodes.ACCEPTED).json({data});
         }
         else{
             res.status(statusCodes.BAD_REQUEST).json({msg:"You can't update a blog that doesn't belong to you"})
@@ -99,7 +99,7 @@ export const deleteBlog = async (req , res)=>{
             return res.status(statusCodes.NOT_FOUND).json(`No Blog found with id ${BlogId}`);
         }
         if(req.user.name === blog.publisher){
-            const deleted_Blog = await Blog.findOneAndDelete({_id:BlogId})
+            const deledated_Blog = await Blog.findOneAndDelete({_id:BlogId})
             res.status(statusCodes.ACCEPTED).json('Blog has been deleted successfully');
         }
         else{
