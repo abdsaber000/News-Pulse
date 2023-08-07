@@ -12,7 +12,7 @@ export const getAllBlogs = async (req, res) => {
   try {
     const data = await Blog.find({});
     data.forEach(shortenBlogs);
-    res.status(statusCodes.ACCEPTED).json({ dat });
+    res.status(statusCodes.ACCEPTED).json({ data});
   } catch (error) {
     res.status(statusCodes.BAD_REQUEST).json({ msg: error });
   }
@@ -51,11 +51,11 @@ export const IsPublisher = async (req, res) => {
 export const getBlog = async (req , res)=>{
     try{
         const BlogId = req.params.id;
-        const data = await Blog.findOne({_id:BlogId})
-        if(!data){
+        const blog = await Blog.findOne({_id:BlogId})
+        if(!blog){
             return res.status(statusCodes.NOT_FOUND).json(`No Blog found with id ${BlogId}`);
         }
-        res.status(statusCodes.ACCEPTED).json({data});
+        res.status(statusCodes.ACCEPTED).json({blog});
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
@@ -64,8 +64,8 @@ export const getBlog = async (req , res)=>{
 export const createBlog = async (req , res)=>{
     try{
         req.body.publisher = req.user.name
-        const data = await Blog.create(req.body)
-        res.status(statusCodes.ACCEPTED).json({data});
+        const blog = await Blog.create(req.body)
+        res.status(statusCodes.ACCEPTED).json({blog});
     }catch(error){
         res.status(statusCodes.BAD_REQUEST).json({msg:error});
     }
@@ -80,8 +80,8 @@ export const updateBlog = async (req , res)=>{
         }
         if(req.user.name === blog.publisher){
               req.body.publisher = req.user.name;
-              const data = await Blog.findOneAndUpdate(req.body)
-              res.status(statusCodes.ACCEPTED).json({data});
+              const updated_blog = await Blog.findOneAndUpdate(req.body)
+              res.status(statusCodes.ACCEPTED).json({updated_blog});
         }
         else{
             res.status(statusCodes.BAD_REQUEST).json({msg:"You can't update a blog that doesn't belong to you"})
