@@ -15,10 +15,6 @@ const uploadMethod = async (req, res) => {
     }
 
     const productImage = req.files.image;
-    const maxSize = 1024 * 1024;
-    if (productImage.size > maxSize) {
-        throw new  BadRequestError('Please upload image smaller 1MB');
-    }
     const imagePath = path.join(
         __dirname,
         '../public/uploads/' + `${productImage.name}`
