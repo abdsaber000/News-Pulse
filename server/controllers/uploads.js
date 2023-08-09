@@ -15,6 +15,10 @@ const uploadMethod = async (req, res) => {
     }
 
     const productImage = req.files.image;
+    let name = "";
+    if(productImage.name) name = productImage.name;
+    if(productImage.filename) name = productImage.filename;
+    productImage.name = name;
     const imagePath = path.join(
         __dirname,
         '../public/uploads/' + `${productImage.name}`
