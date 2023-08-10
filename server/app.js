@@ -6,6 +6,7 @@ import {router} from "./routes/news.js"
 import { uploadRouter } from "./routes/uploads.js";
 import {report} from "./routes/contact.js";
 import { authRouter } from "./routes/auth.js";
+import { AboutUsRouter } from "./routes/about-us.js";
 import cors from "cors";
 import fileUpload from "express-fileupload";
 import {errorHandlerMiddleware} from "./middleware/error-handler.js"
@@ -23,7 +24,7 @@ app.use('/api/v1/news' , router)
 app.use('/api/v1/contact' , report);
 app.use('/uploads' , uploadRouter);
 app.use('/api/v1/auth', authRouter);
-
+app.use('/api/v1/about-us' , AboutUsRouter);
 app.use(errorHandlerMiddleware);
 
 
