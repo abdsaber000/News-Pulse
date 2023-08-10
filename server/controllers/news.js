@@ -4,7 +4,7 @@ import {Blog} from "../models/Blog.js";
 import jwt from "jsonwebtoken";
 
 export const shortenBlogs = (blog) => {
-  blog.content = blog.content.split(" ").splice(0,20).join(" ");
+  blog.content = blog.content.split(" ").splice(0,30).join(" ");
 };
 
 
