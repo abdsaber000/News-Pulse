@@ -80,7 +80,7 @@ export const updateBlog = async (req , res)=>{
         }
         if(req.user.name === blog.publisher){
               req.body.publisher = req.user.name;
-              const data = await Blog.findOneAndUpdate(req.body)
+              const data = await Blog.findOneAndUpdate({_id:BlogId} , req.body)
               res.status(statusCodes.ACCEPTED).json({data});
         }
         else{
